@@ -11,6 +11,8 @@ public class BallScript : MonoBehaviour
 
     [SerializeField] protected float worldVelocity = 25f;
 
+    [SerializeField] protected int damage = 1;
+
 
     private void OnEnable()
     {
@@ -36,9 +38,19 @@ public class BallScript : MonoBehaviour
 
         nV3.x = Mathf.Clamp(hV3.x, -worldVelocity, worldVelocity);
         nV3.y = Mathf.Clamp(hV3.y, -worldVelocity, worldVelocity);
-        nV3.z = 0;
+        nV3.z = Mathf.Clamp(hV3.z, -worldVelocity, worldVelocity);
 
         rb.velocity = nV3;
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+
+            breakableBrick breakableBrick = collision.gameObject.GetComponent<breakableBrick>();
+            if (breakableBrick != null)
+            {
+                breakableBrick.Break(damage);
+            }
+        
+    }
 }

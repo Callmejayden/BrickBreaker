@@ -4,6 +4,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,6 +23,42 @@ public class GameManager : MonoBehaviour
         {
             playerScore = value;
         }
+    }
+
+    public void ResetScore()
+    {
+        playerScore = 0;
+    }
+
+    public void AddScore(float score)
+    {
+        playerScore += score;
+    }
+
+    public void NextScene()
+    {
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int nextSceneIndex = currentSceneIndex + 1;
+        if (nextSceneIndex >= SceneManager.sceneCountInBuildSettings - 1)
+        {
+            SceneManager.LoadScene(0);
+        }
+        else
+        {
+            SceneManager.LoadScene(nextSceneIndex);
+        }
+        if (nextSceneIndex == 1)
+        {
+            ResetScore();
+        }
+    }
+    public void LoadScene(int sceneIndex)
+    {
+        SceneManager.LoadScene(sceneIndex);
+    }
+    public void StartScene()
+    {
+        SceneManager.LoadScene(0);
     }
 
 
